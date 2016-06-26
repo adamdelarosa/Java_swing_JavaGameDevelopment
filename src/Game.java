@@ -11,18 +11,40 @@ public class Game extends Canvas implements Runnable {
     public boolean running = false;
     private Thread thread;
 
-    private synchronized void start(){
-        if(running)
+    private synchronized void start() {
+        if (running)
             return;
 
         running = true;
+        thread = new Thread(this);
+        thread.start();
+    }
+
+    private synchronized void stop() {
+        if (!running)
+            return;
+
+        running = false;
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.exit(1);
     }
 
     public void run() {
-        while (running){
-            //Game Loop:
-        }
 
+        long lastTime = System.nanoTime();
+        final double amountOfTicks = 60.0;
+        double ns = 1000000000 / amountOfTicks;
+        double delta = 0;
+
+        while (running) {
+            long now = System.nanoTime();
+
+        }
+        stop();
     }
 
     public static void main(String args[]) {
@@ -38,5 +60,7 @@ public class Game extends Canvas implements Runnable {
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+
+        game.start();
     }
 }
