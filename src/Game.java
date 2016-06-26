@@ -3,10 +3,20 @@ import java.awt.*;
 
 public class Game extends Canvas implements Runnable {
 
-    public static final int WIDTH = 20;
-    public static final int HEIGHT = WIDTH / 19 * 9;
+    private static final long serialVersionUID = 1L;
+    public static final int WIDTH = 320;
+    public static final int HEIGHT = WIDTH / 20 * 10;
     public static final int SCALE = 2;
     public final String TITLE = "2D Game";
+    public boolean running = false;
+    private Thread thread;
+
+    public void run() {
+        while (running){
+            //Game Loop:
+        }
+
+    }
 
     public static void main(String args[]) {
         Game game = new Game();
@@ -21,10 +31,5 @@ public class Game extends Canvas implements Runnable {
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-    }
-
-    @Override
-    public void run() {
-
     }
 }
