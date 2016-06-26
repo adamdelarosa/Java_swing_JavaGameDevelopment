@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class Game extends Canvas implements Runnable {
 
@@ -10,6 +11,7 @@ public class Game extends Canvas implements Runnable {
     public final String TITLE = "2D Game";
     public boolean running = false;
     private Thread thread;
+    private BufferedImage image = new BufferedImage(WIDTH,HEIGHT,BufferedImage.TYPE_3BYTE_BGR);
 
     private synchronized void start() {
         if (running)
