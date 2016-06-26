@@ -11,6 +11,13 @@ public class Game extends Canvas implements Runnable {
     public boolean running = false;
     private Thread thread;
 
+    private synchronized void start(){
+        if(running)
+            return;
+
+        running = true;
+    }
+
     public void run() {
         while (running){
             //Game Loop:
