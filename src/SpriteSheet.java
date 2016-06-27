@@ -1,5 +1,10 @@
-/**
- * Created by ROSA on 27/06/2016.
- */
+import java.awt.image.BufferedImage;
+
 public class SpriteSheet {
+
+    private BufferedImage image;
+
+    private SpriteSheet(BufferedImage ss){
+        this.image = ss;
+    }
 }
