@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 public class Game extends Canvas implements Runnable {
 
@@ -12,7 +13,18 @@ public class Game extends Canvas implements Runnable {
     public final String TITLE = "2D Game";
     public boolean running = false;
     private Thread thread;
+
     private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_3BYTE_BGR);
+    private BufferedImage spriteSheet = null;
+
+    public void init(){
+        BufferedImageLoader loader = new BufferedImageLoader();
+        try{
+            spriteSheet = loader.loadImage("ship.png");
+        }catch (IOException ioexception){
+            ioexception.printStackTrace();
+        }
+    }
 
     private synchronized void start() {
         if (running)
@@ -37,6 +49,8 @@ public class Game extends Canvas implements Runnable {
     }
 
     public void run() {
+
+        init();
 
         long lastTime = System.nanoTime();
         final double amountOfTicks = 60.0;
