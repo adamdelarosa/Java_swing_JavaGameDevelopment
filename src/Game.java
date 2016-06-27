@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
 public class Game extends Canvas implements Runnable {
@@ -11,7 +12,7 @@ public class Game extends Canvas implements Runnable {
     public final String TITLE = "2D Game";
     public boolean running = false;
     private Thread thread;
-    private BufferedImage image = new BufferedImage(WIDTH,HEIGHT,BufferedImage.TYPE_3BYTE_BGR);
+    private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_3BYTE_BGR);
 
     private synchronized void start() {
         if (running)
@@ -62,7 +63,7 @@ public class Game extends Canvas implements Runnable {
 
             if (System.currentTimeMillis() - timer > 1000) {
                 timer += 1000;
-                System.out.println("Ticks: "+ updates + " FPS: " + frames);
+                System.out.println("Ticks: " + updates + " FPS: " + frames);
                 updates = 0;
                 frames = 0;
             }
@@ -76,6 +77,23 @@ public class Game extends Canvas implements Runnable {
     }
 
     private void render() {
+        BufferStrategy bs = this.getBufferStrategy();
+
+        if(bs == null){
+            createBufferStrategy(3);
+            return;
+        }
+
+        Graphics g = bs.getDrawGraphics();
+        ////
+
+        g.drawImage(image,0,0,getWidth(),getHeight(),this);
+
+
+
+        ////
+        g.dispose();
+        bs.show();
 
     }
 
