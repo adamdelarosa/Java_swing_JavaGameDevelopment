@@ -21,15 +21,17 @@ public class Game extends Canvas implements Runnable {
     private Player p;
 
 
-    public void init(){
+    public void init() {
         BufferedImageLoader loader = new BufferedImageLoader();
-        try{
+        try {
             spriteSheet = loader.loadImage("rsc/ship.png");
-        }catch (IOException ioexception){
+        } catch (IOException ioexception) {
             ioexception.printStackTrace();
         }
 
-        p = new Player(200,200,this);
+        addKeyListener(new Keyboard(this));
+
+        p = new Player(200, 200, this);
     }
 
     private synchronized void start() {
@@ -100,7 +102,7 @@ public class Game extends Canvas implements Runnable {
     private void render() {
         BufferStrategy bs = this.getBufferStrategy();
 
-        if(bs == null){
+        if (bs == null) {
             createBufferStrategy(3);
             return;
         }
@@ -108,7 +110,7 @@ public class Game extends Canvas implements Runnable {
         Graphics g = bs.getDrawGraphics();
         ////
 
-        g.drawImage(image,0,0,getWidth(),getHeight(),this);
+        g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
 
         p.render(g);
 
@@ -119,21 +121,21 @@ public class Game extends Canvas implements Runnable {
 
     }
 
-    public void keyPressed(KeyEvent e){
+    public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
 
-        if(key == KeyEvent.VK_RIGHT){
-
-        }else if (key == KeyEvent.VK_LEFT){
-
-        }else if (key == KeyEvent.VK_DOWN){
-
-        }else if (key == KeyEvent.VK_UP){
-
+        if (key == KeyEvent.VK_RIGHT) {
+            p.setX(p.getX() + 5);
+        } else if (key == KeyEvent.VK_LEFT) {
+            p.setX(p.getX() - 5);
+        } else if (key == KeyEvent.VK_DOWN) {
+            p.setY(p.getY() + 5);
+        } else if (key == KeyEvent.VK_UP) {
+            p.setY(p.getY() - 5);
         }
     }
 
-    public void keyReleased(KeyEvent e){
+    public void keyReleased(KeyEvent e) {
 
     }
 
@@ -155,7 +157,7 @@ public class Game extends Canvas implements Runnable {
     }
 
 
-    public BufferedImage getSpriteSheet(){
+    public BufferedImage getSpriteSheet() {
         return spriteSheet;
     }
 }
