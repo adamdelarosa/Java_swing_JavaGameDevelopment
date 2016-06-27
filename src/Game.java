@@ -94,7 +94,7 @@ public class Game extends Canvas implements Runnable {
 
     private void tick() {
 
-
+        p.tick();
     }
 
     private void render() {
@@ -109,6 +109,8 @@ public class Game extends Canvas implements Runnable {
         ////
 
         g.drawImage(image,0,0,getWidth(),getHeight(),this);
+
+        p.render(g);
 
 
         ////
@@ -134,11 +136,6 @@ public class Game extends Canvas implements Runnable {
         game.start();
     }
 
-    private void callFPS(Graphics gText){
-        gText.drawString("Hello World",10,10);
-        gText.setFont(new Font("TimesRoman", Font.PLAIN, 20));
-
-    }
 
     public BufferedImage getSpriteSheet(){
         return spriteSheet;

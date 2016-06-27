@@ -19,7 +19,6 @@ public class Player {
 
     }
 
-    public String hello = "caw";
 
     public void tick() {
     }
