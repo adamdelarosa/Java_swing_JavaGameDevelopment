@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -93,7 +94,6 @@ public class Game extends Canvas implements Runnable {
     }
 
     private void tick() {
-
         p.tick();
     }
 
@@ -116,6 +116,24 @@ public class Game extends Canvas implements Runnable {
         ////
         g.dispose();
         bs.show();
+
+    }
+
+    public void keyPressed(KeyEvent e){
+        int key = e.getKeyCode();
+
+        if(key == KeyEvent.VK_RIGHT){
+
+        }else if (key == KeyEvent.VK_LEFT){
+
+        }else if (key == KeyEvent.VK_DOWN){
+
+        }else if (key == KeyEvent.VK_UP){
+
+        }
+    }
+
+    public void keyReleased(KeyEvent e){
 
     }
 

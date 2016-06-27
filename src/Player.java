@@ -21,10 +21,27 @@ public class Player {
 
 
     public void tick() {
+
     }
 
     public void render(Graphics g) {
         g.drawImage(player, (int) x, (int) y, null);
 
+    }
+
+    public double getX() {
+        return x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public void setX() {
+        this.x = x;
+    }
+
+    public void setY() {
+        this.y = y;
     }
 }
