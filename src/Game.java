@@ -17,13 +17,18 @@ public class Game extends Canvas implements Runnable {
     private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_3BYTE_BGR);
     private BufferedImage spriteSheet = null;
 
+    private BufferedImage player;
+
     public void init(){
         BufferedImageLoader loader = new BufferedImageLoader();
         try{
-            spriteSheet = loader.loadImage("ship.png");
+            spriteSheet = loader.loadImage("rsc/ship.png");
         }catch (IOException ioexception){
             ioexception.printStackTrace();
         }
+
+        SpriteSheet ss = new SpriteSheet(spriteSheet);
+        player = ss.grabImage(1,1,32,32);
     }
 
     private synchronized void start() {
@@ -104,6 +109,8 @@ public class Game extends Canvas implements Runnable {
         ////
 
         g.drawImage(image,0,0,getWidth(),getHeight(),this);
+
+        g.drawImage(player,100,100,this);
 
 
 
