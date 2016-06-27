@@ -64,6 +64,7 @@ public class Game extends Canvas implements Runnable {
             if (System.currentTimeMillis() - timer > 1000) {
                 timer += 1000;
                 System.out.println("Ticks: " + updates + " FPS: " + frames);
+
                 updates = 0;
                 frames = 0;
             }
@@ -113,5 +114,11 @@ public class Game extends Canvas implements Runnable {
         frame.setVisible(true);
 
         game.start();
+    }
+
+    private void callFPS(Graphics gText){
+        gText.drawString("Hello World",10,10);
+        gText.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+
     }
 }
