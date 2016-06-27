@@ -17,7 +17,8 @@ public class Game extends Canvas implements Runnable {
     private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_3BYTE_BGR);
     private BufferedImage spriteSheet = null;
 
-    private BufferedImage player;
+    private Player p;
+
 
     public void init(){
         BufferedImageLoader loader = new BufferedImageLoader();
@@ -27,8 +28,7 @@ public class Game extends Canvas implements Runnable {
             ioexception.printStackTrace();
         }
 
-        SpriteSheet ss = new SpriteSheet(spriteSheet);
-        player = ss.grabImage(1,1,32,32);
+        p = new Player(200,200,this);
     }
 
     private synchronized void start() {
@@ -110,9 +110,6 @@ public class Game extends Canvas implements Runnable {
 
         g.drawImage(image,0,0,getWidth(),getHeight(),this);
 
-        g.drawImage(player,100,100,this);
-
-
 
         ////
         g.dispose();
@@ -141,5 +138,9 @@ public class Game extends Canvas implements Runnable {
         gText.drawString("Hello World",10,10);
         gText.setFont(new Font("TimesRoman", Font.PLAIN, 20));
 
+    }
+
+    public BufferedImage getSpriteSheet(){
+        return spriteSheet;
     }
 }
