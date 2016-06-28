@@ -10,16 +10,19 @@ public class Game extends Canvas implements Runnable {
     private static final long serialVersionUID = 1L;
     public static final int WIDTH = 320;
     public static final int HEIGHT = WIDTH / 20 * 10;
-    public static final int SCALE = 2;
+    public static final int SCALE = 4;
     public final String TITLE = "2D Game";
     public boolean running = false;
     private Thread thread;
 
     private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_3BYTE_BGR);
     private BufferedImage spriteSheet = null;
+    private BufferedImage background = null;
+
+    private boolean isShooting = false;
 
     private Player p;
-
+    private Controller c;
 
     public void init() {
 
@@ -28,6 +31,7 @@ public class Game extends Canvas implements Runnable {
         BufferedImageLoader loader = new BufferedImageLoader();
         try {
             spriteSheet = loader.loadImage("rsc/ship.png");
+            background = loader.loadImage("rsc/background.jpg");
         } catch (IOException ioexception) {
             ioexception.printStackTrace();
         }
@@ -35,6 +39,7 @@ public class Game extends Canvas implements Runnable {
         addKeyListener(new Keyboard(this));
 
         p = new Player(200, 200, this);
+        c = new Controller(this);
     }
 
     private synchronized void start() {
@@ -74,6 +79,15 @@ public class Game extends Canvas implements Runnable {
 
         while (running) {
 
+            try
+            {
+                Thread.sleep(10);
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+
             long now = System.nanoTime();
             delta += (now - lastTime) / ns;
             lastTime = now;
@@ -100,6 +114,7 @@ public class Game extends Canvas implements Runnable {
 
     private void tick() {
         p.tick();
+        c.tick();
     }
 
     private void render() {
@@ -111,12 +126,14 @@ public class Game extends Canvas implements Runnable {
         }
 
         Graphics g = bs.getDrawGraphics();
+
+
         ////
 
         g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
-
+        g.drawImage(background, 0, 0, null);
         p.render(g);
-
+        c.render(g);
 
         ////
         g.dispose();
@@ -126,15 +143,24 @@ public class Game extends Canvas implements Runnable {
 
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
+        switch(e.getKeyCode()) {}
 
         if (key == KeyEvent.VK_RIGHT) {
-            p.setVelX(5);
+           p.setVelX(5);
+
         } else if (key == KeyEvent.VK_LEFT) {
             p.setVelX(-5);
+
         } else if (key == KeyEvent.VK_DOWN) {
             p.setVelY(5);
+
         } else if (key == KeyEvent.VK_UP) {
             p.setVelY(-5);
+
+        } else if (key == KeyEvent.VK_SPACE && !isShooting) {
+            c.addBullet(new Bullets(p.getX(), p.getY(), this));
+        } else if (key == KeyEvent.VK_ESCAPE){
+            System.exit(0);
         }
     }
 
@@ -143,12 +169,18 @@ public class Game extends Canvas implements Runnable {
 
         if (key == KeyEvent.VK_RIGHT) {
             p.setVelX(0);
+
         } else if (key == KeyEvent.VK_LEFT) {
             p.setVelX(0);
+
         } else if (key == KeyEvent.VK_DOWN) {
             p.setVelY(0);
+
         } else if (key == KeyEvent.VK_UP) {
             p.setVelY(0);
+
+        } else if (key == KeyEvent.VK_SPACE){
+            isShooting = false;
         }
     }
 

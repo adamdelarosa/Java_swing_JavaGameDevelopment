@@ -24,4 +24,8 @@ public class Bullets {
     public void render(Graphics g) {
         g.drawImage(image, (int) x, (int) y, null);
     }
+
+    public double getY(){
+        return y;
+    }
 }
