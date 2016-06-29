@@ -1,25 +1,25 @@
 import java.awt.*;
 import java.util.Random;
 
-public class Enemy {
+public class Enemy extends GameObject implements Entity {
 
-    private double x, y;
     private Textures tex;
-
     Random r = new Random();
 
+    private int speed = r.nextInt(3) + 1;
+
     public Enemy(double x, double y, Textures tex) {
-        this.x = x;
-        this.y = y;
+        super(x,y);
         this.tex = tex;
     }
 
     public void tick() {
-        y += 1;
+        y += speed;
 
         if (y > (Game.HEIGHT * Game.SCALE)) {
-            y = 0;
-            x = r.nextInt(Game.WIDTH * Game.SCALE);
+            speed = r.nextInt(3)+1;
+            x = r.nextInt(640);
+            y = -10;
         }
     }
 
@@ -30,6 +30,10 @@ public class Enemy {
 
     public double getY() {
         return y;
+    }
+
+    public double getX() {
+        return x;
     }
 
     public void setY(double y) {

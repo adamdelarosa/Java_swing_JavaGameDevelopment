@@ -4,67 +4,46 @@ import java.util.Random;
 
 public class Controller {
 
-    private LinkedList<Bullets> b = new LinkedList<Bullets>();
-    private LinkedList<Enemy> e = new LinkedList<>();
+    private LinkedList<Entity> e = new LinkedList<Entity>();
 
+    Entity ent;
+    Textures tex;
     Random r = new Random();
 
-    Bullets TempBullets;
-    Enemy TempEnemey;
-
-    Game game;
-    Textures tex;
-
-    public Controller(Game game,Textures tex){
-        this.game = game;
+    public Controller(Textures tex) {
         this.tex = tex;
-
-            addEnemey(new Enemy(r.nextInt(Game.WIDTH * Game.SCALE),0,tex));
-
     }
 
-    public void tick(){
-        for(int i = 0; i < b.size(); i++){
-            TempBullets = b.get(i);
-
-            if(TempBullets.getY() <0){
-                removeBulet(TempBullets);
-            }
-
-
-            TempBullets.tick();
-        }
-
-        for(int i = 0; i < e.size(); i++){
-            TempEnemey = e.get(i);
-            TempEnemey.tick();
+    public void createEnemey(int enemy_count) {
+        for (int i = 0; i < enemy_count; i++) {
+            addEntity(new Enemy(r.nextInt(640), -10, tex));
         }
     }
 
-    public void render(Graphics g){
-        for(int i = 0; i < b.size(); i++){
-            TempBullets = b.get(i);
-            TempBullets.render(g);
-        }
-        for(int i = 0; i < e.size(); i++){
-            TempEnemey = e.get(i);
-            TempEnemey.render(g);
+
+    public void tick() {
+        for (int i = 0; i < e.size(); i++) {
+            ent = e.get(i);
+
+            ent.tick();
         }
     }
 
-    public void addBullet(Bullets block) {
-        b.add(block);
+    public void render(Graphics g) {
+        for (int i = 0; i < e.size(); i++) {
+            ent = e.get(i);
+
+            ent.render(g);
+        }
     }
 
-    public void removeBulet(Bullets block){
-        b.remove(block);
-    }
-
-    public void addEnemey(Enemy block) {
+    public void addEntity(Entity block) {
         e.add(block);
     }
 
-    public void removeEnemey(Enemy block){
+    public void removeEntity(Entity block) {
         e.remove(block);
     }
+
+
 }

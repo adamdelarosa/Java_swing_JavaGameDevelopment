@@ -1,18 +1,11 @@
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
-public class Bullets {
-
-    private double x;
-    private double y;
+public class Bullets extends GameObject implements Entity{
 
     private Textures tex;
 
-    BufferedImage image;
-
     public Bullets(double x, double y,Textures tex) {
-        this.x = x;
-        this.y = y;
+        super(x,y);
         this.tex = tex;
     }
 
@@ -27,4 +20,8 @@ public class Bullets {
     public double getY(){
         return y;
     }
+    public double getX(){
+        return x;
+    }
+
 }

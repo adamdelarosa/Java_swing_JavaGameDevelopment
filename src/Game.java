@@ -23,9 +23,10 @@ public class Game extends Canvas implements Runnable {
     private boolean DOWN = false;
     private boolean LEFT = false;
     private boolean RIGHT = false;
-
-
     private boolean isShooting = false;
+
+    private int enemy_count = 5;
+    private int enemy_killed = 0;
 
     private Player p;
     private Controller c;
@@ -43,12 +44,13 @@ public class Game extends Canvas implements Runnable {
             ioexception.printStackTrace();
         }
 
-        addKeyListener(new Keyboard(this));
+        this.addKeyListener(new Keyboard(this));
+
 
         tex = new Textures(this);
-
         p = new Player(200, 200, tex);
-        c = new Controller(this,tex);
+        c = new Controller(tex);
+        c.createEnemey(enemy_count);
     }
 
     private synchronized void start() {
@@ -176,7 +178,7 @@ public class Game extends Canvas implements Runnable {
             p.setVelY(-5);
 
         } else if (key == KeyEvent.VK_SPACE && !isShooting) {
-            c.addBullet(new Bullets(p.getX(), p.getY(),tex));
+            c.addEntity(new Bullets(p.getX(), p.getY(), tex));
             isShooting = true;
         } else if (key == KeyEvent.VK_ESCAPE) {
             System.exit(0);
@@ -229,4 +231,22 @@ public class Game extends Canvas implements Runnable {
     public BufferedImage getSpriteSheet() {
         return spriteSheet;
     }
+
+    public int getEnemy_count() {
+        return enemy_count;
+    }
+
+    public void setEnemy_count(int enemy_count) {
+        this.enemy_count = enemy_count;
+    }
+
+    public int getEnemy_killed() {
+        return enemy_killed;
+    }
+
+    public void setEnemy_killed(int enemy_killed) {
+        this.enemy_killed = enemy_killed;
+    }
+
+
 }
