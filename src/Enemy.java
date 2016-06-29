@@ -12,7 +12,7 @@ public class Enemy {
     }
 
     public void tick() {
-        y -= 5;
+        y += 5;
     }
 
     public void render(Graphics g) {

@@ -48,7 +48,7 @@ public class Game extends Canvas implements Runnable {
         tex = new Textures(this);
 
         p = new Player(200, 200, tex);
-        c = new Controller(this);
+        c = new Controller(this,tex);
     }
 
     private synchronized void start() {

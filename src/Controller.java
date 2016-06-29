@@ -10,9 +10,15 @@ public class Controller {
     Enemy TempEnemey;
 
     Game game;
+    Textures tex;
 
-    public Controller(Game game){
+    public Controller(Game game,Textures tex){
         this.game = game;
+        this.tex = tex;
+
+        for(int x = 0; x< (Game.WIDTH * Game.SCALE);x+= 64){
+            addEnemey(new Enemy(x,0,tex));
+        }
     }
 
     public void tick(){
