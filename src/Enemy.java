@@ -1,7 +1,9 @@
+import Classes.EntityB;
+
 import java.awt.*;
 import java.util.Random;
 
-public class Enemy extends GameObject implements Entity {
+public class Enemy extends GameObject implements EntityB {
 
     private Textures tex;
     Random r = new Random();

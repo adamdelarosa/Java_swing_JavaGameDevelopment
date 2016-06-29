@@ -1,7 +1,9 @@
+import Classes.EntityA;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class Player extends GameObject{
+public class Player extends GameObject implements EntityA {
 
     private double velX;
     private double velY;
@@ -10,8 +12,8 @@ public class Player extends GameObject{
 
     private Textures tex;
 
-    public Player(double x, double y,Textures tex) {
-        super(x,y);
+    public Player(double x, double y, Textures tex) {
+        super(x, y);
         this.tex = tex;
     }
 

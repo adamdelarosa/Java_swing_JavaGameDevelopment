@@ -1,6 +1,8 @@
+import Classes.EntityA;
+
 import java.awt.*;
 
-public class Bullets extends GameObject implements Entity{
+public class Bullets extends GameObject implements EntityA {
 
     private Textures tex;
 

@@ -1,3 +1,5 @@
+package Classes;
+
 import java.awt.*;
 
 public interface EntityB {
