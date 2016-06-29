@@ -1,10 +1,13 @@
 import java.awt.*;
 import java.util.LinkedList;
+import java.util.Random;
 
 public class Controller {
 
     private LinkedList<Bullets> b = new LinkedList<Bullets>();
     private LinkedList<Enemy> e = new LinkedList<>();
+
+    Random r = new Random();
 
     Bullets TempBullets;
     Enemy TempEnemey;
@@ -16,9 +19,8 @@ public class Controller {
         this.game = game;
         this.tex = tex;
 
-        for(int x = 0; x< (Game.WIDTH * Game.SCALE);x+= 64){
-            addEnemey(new Enemy(x,0,tex));
-        }
+            addEnemey(new Enemy(r.nextInt(Game.WIDTH * Game.SCALE),0,tex));
+
     }
 
     public void tick(){
@@ -28,6 +30,7 @@ public class Controller {
             if(TempBullets.getY() <0){
                 removeBulet(TempBullets);
             }
+
 
             TempBullets.tick();
         }
