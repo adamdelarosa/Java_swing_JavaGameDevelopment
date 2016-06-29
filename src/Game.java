@@ -29,6 +29,7 @@ public class Game extends Canvas implements Runnable {
 
     private Player p;
     private Controller c;
+    private Textures tex;
 
     public void init() {
 
@@ -44,7 +45,9 @@ public class Game extends Canvas implements Runnable {
 
         addKeyListener(new Keyboard(this));
 
-        p = new Player(200, 200, this);
+        tex = new Textures(this);
+
+        p = new Player(200, 200, tex);
         c = new Controller(this);
     }
 
@@ -87,17 +90,14 @@ public class Game extends Canvas implements Runnable {
 
             //Keyboard:
 
-            if( UP ) p.setVelY(-5);
-            if( DOWN ) p.setVelY(5);
-            if( LEFT ) p.setVelX(-5);
-            if( RIGHT ) p.setVelX(5);
+            if (UP) p.setVelY(-5);
+            if (DOWN) p.setVelY(5);
+            if (LEFT) p.setVelX(-5);
+            if (RIGHT) p.setVelX(5);
 
-            try
-            {
+            try {
                 Thread.sleep(10);
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
@@ -156,7 +156,8 @@ public class Game extends Canvas implements Runnable {
 
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
-        switch(e.getKeyCode()) {}
+        switch (e.getKeyCode()) {
+        }
 
         if (key == KeyEvent.VK_RIGHT) {
             RIGHT = true;
@@ -171,12 +172,13 @@ public class Game extends Canvas implements Runnable {
             p.setVelY(5);
 
         } else if (key == KeyEvent.VK_UP) {
-            UP=true;
+            UP = true;
             p.setVelY(-5);
 
         } else if (key == KeyEvent.VK_SPACE && !isShooting) {
-            c.addBullet(new Bullets(p.getX(), p.getY(), this));
-        } else if (key == KeyEvent.VK_ESCAPE){
+            c.addBullet(new Bullets(p.getX(), p.getY(),tex));
+            isShooting = true;
+        } else if (key == KeyEvent.VK_ESCAPE) {
             System.exit(0);
         }
     }
@@ -200,11 +202,10 @@ public class Game extends Canvas implements Runnable {
             UP = false;
             p.setVelY(0);
 
-        } else if (key == KeyEvent.VK_SPACE){
+        } else if (key == KeyEvent.VK_SPACE) {
             isShooting = false;
         }
     }
-
 
 
     public static void main(String args[]) {

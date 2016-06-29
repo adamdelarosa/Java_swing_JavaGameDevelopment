@@ -4,8 +4,10 @@ import java.util.LinkedList;
 public class Controller {
 
     private LinkedList<Bullets> b = new LinkedList<Bullets>();
+    private LinkedList<Enemy> e = new LinkedList<>();
 
     Bullets TempBullets;
+    Enemy TempEnemey;
 
     Game game;
 
@@ -23,13 +25,21 @@ public class Controller {
 
             TempBullets.tick();
         }
+
+        for(int i = 0; i < e.size(); i++){
+            TempEnemey = e.get(i);
+            TempEnemey.tick();
+        }
     }
 
     public void render(Graphics g){
         for(int i = 0; i < b.size(); i++){
             TempBullets = b.get(i);
-
             TempBullets.render(g);
+        }
+        for(int i = 0; i < e.size(); i++){
+            TempEnemey = e.get(i);
+            TempEnemey.render(g);
         }
     }
 
@@ -39,5 +49,13 @@ public class Controller {
 
     public void removeBulet(Bullets block){
         b.remove(block);
+    }
+
+    public void addEnemey(Enemy block) {
+        e.add(block);
+    }
+
+    public void removeEnemey(Enemy block){
+        e.remove(block);
     }
 }
