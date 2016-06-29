@@ -19,6 +19,10 @@ public class Bullets extends GameObject implements EntityA {
         g.drawImage(tex.missle, (int) x, (int) y, null);
     }
 
+    public Rectangle getBounds() {
+        return new Rectangle((int) x, (int) y, 32, 32);
+    }
+
     public double getY(){
         return y;
     }
