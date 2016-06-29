@@ -10,7 +10,7 @@ public class Game extends Canvas implements Runnable {
     private static final long serialVersionUID = 1L;
     public static final int WIDTH = 320;
     public static final int HEIGHT = WIDTH / 20 * 10;
-    public static final int SCALE = 4;
+    public static final int SCALE = 2;
     public final String TITLE = "2D Game";
     public boolean running = false;
     private Thread thread;
@@ -18,6 +18,12 @@ public class Game extends Canvas implements Runnable {
     private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_3BYTE_BGR);
     private BufferedImage spriteSheet = null;
     private BufferedImage background = null;
+
+    private boolean UP = false;
+    private boolean DOWN = false;
+    private boolean LEFT = false;
+    private boolean RIGHT = false;
+
 
     private boolean isShooting = false;
 
@@ -78,6 +84,13 @@ public class Game extends Canvas implements Runnable {
 
 
         while (running) {
+
+            //Keyboard:
+
+            if( UP ) p.setVelY(-5);
+            if( DOWN ) p.setVelY(5);
+            if( LEFT ) p.setVelX(-5);
+            if( RIGHT ) p.setVelX(5);
 
             try
             {
@@ -146,15 +159,19 @@ public class Game extends Canvas implements Runnable {
         switch(e.getKeyCode()) {}
 
         if (key == KeyEvent.VK_RIGHT) {
-           p.setVelX(5);
+            RIGHT = true;
+            p.setVelX(5);
 
         } else if (key == KeyEvent.VK_LEFT) {
+            LEFT = true;
             p.setVelX(-5);
 
         } else if (key == KeyEvent.VK_DOWN) {
+            DOWN = true;
             p.setVelY(5);
 
         } else if (key == KeyEvent.VK_UP) {
+            UP=true;
             p.setVelY(-5);
 
         } else if (key == KeyEvent.VK_SPACE && !isShooting) {
@@ -168,21 +185,27 @@ public class Game extends Canvas implements Runnable {
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_RIGHT) {
+            RIGHT = false;
             p.setVelX(0);
 
         } else if (key == KeyEvent.VK_LEFT) {
+            LEFT = false;
             p.setVelX(0);
 
         } else if (key == KeyEvent.VK_DOWN) {
+            DOWN = false;
             p.setVelY(0);
 
         } else if (key == KeyEvent.VK_UP) {
+            UP = false;
             p.setVelY(0);
 
         } else if (key == KeyEvent.VK_SPACE){
             isShooting = false;
         }
     }
+
+
 
     public static void main(String args[]) {
         Game game = new Game();
