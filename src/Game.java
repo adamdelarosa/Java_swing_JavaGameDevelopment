@@ -35,9 +35,17 @@ public class Game extends Canvas implements Runnable {
     private Player p;
     private Controller c;
     private Textures tex;
+    private Menu menu;
 
     public LinkedList<EntityA> ea;
     public LinkedList<EntityB> eb;
+
+    public static enum STATE{
+        MENU,
+        GAME
+    };
+
+    public static STATE state = STATE.MENU;
 
     public Game() {
     }
@@ -54,16 +62,22 @@ public class Game extends Canvas implements Runnable {
             ioexception.printStackTrace();
         }
 
-        this.addKeyListener(new Keyboard(this));
 
 
         tex = new Textures(this);
         p = new Player(200, 200, tex);
         c = new Controller(tex,this);
-        c.createEnemey(enemy_count);
+        menu = new Menu();
 
         ea = c.getEntityA();
         eb = c.getEntityB();
+
+        this.addKeyListener(new Keyboard(this));
+        this.addMouseListener(new MouseInput());
+
+        c.createEnemey(enemy_count);
+
+
     }
 
     private synchronized void start() {
@@ -141,8 +155,13 @@ public class Game extends Canvas implements Runnable {
     }
 
     private void tick() {
-        p.tick();
-        c.tick();
+
+        if(state == STATE.GAME){
+            p.tick();
+            c.tick();
+        }
+
+
 
         if(enemy_killed >= enemy_count){
             enemy_count += 2;
@@ -166,8 +185,13 @@ public class Game extends Canvas implements Runnable {
 
         g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
         g.drawImage(background, 0, 0, null);
-        p.render(g);
-        c.render(g);
+
+        if(state == STATE.GAME) {
+            p.render(g);
+            c.render(g);
+        }else if(state == STATE.MENU){
+            menu.render(g);
+        }
 
         ////
         g.dispose();
@@ -177,30 +201,31 @@ public class Game extends Canvas implements Runnable {
 
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
-        switch (e.getKeyCode()) {
-        }
 
-        if (key == KeyEvent.VK_RIGHT) {
-            RIGHT = true;
-            p.setVelX(5);
+        if(state == STATE.GAME) {
 
-        } else if (key == KeyEvent.VK_LEFT) {
-            LEFT = true;
-            p.setVelX(-5);
+            if (key == KeyEvent.VK_RIGHT) {
+                RIGHT = true;
+                p.setVelX(5);
 
-        } else if (key == KeyEvent.VK_DOWN) {
-            DOWN = true;
-            p.setVelY(5);
+            } else if (key == KeyEvent.VK_LEFT) {
+                LEFT = true;
+                p.setVelX(-5);
 
-        } else if (key == KeyEvent.VK_UP) {
-            UP = true;
-            p.setVelY(-5);
+            } else if (key == KeyEvent.VK_DOWN) {
+                DOWN = true;
+                p.setVelY(5);
 
-        } else if (key == KeyEvent.VK_SPACE && !isShooting) {
-            c.addEntity(new Bullets(p.getX(), p.getY(), tex, this));
-            isShooting = true;
-        } else if (key == KeyEvent.VK_ESCAPE) {
-            System.exit(0);
+            } else if (key == KeyEvent.VK_UP) {
+                UP = true;
+                p.setVelY(-5);
+
+            } else if (key == KeyEvent.VK_SPACE && !isShooting) {
+                c.addEntity(new Bullets(p.getX(), p.getY(), tex, this));
+                isShooting = true;
+            } else if (key == KeyEvent.VK_ESCAPE) {
+                System.exit(0);
+            }
         }
     }
 
