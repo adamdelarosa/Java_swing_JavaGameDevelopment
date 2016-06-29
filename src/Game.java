@@ -1,9 +1,13 @@
+import Classes.EntityA;
+import Classes.EntityB;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.LinkedList;
 
 public class Game extends Canvas implements Runnable {
 
@@ -32,6 +36,12 @@ public class Game extends Canvas implements Runnable {
     private Controller c;
     private Textures tex;
 
+    public LinkedList<EntityA> ea;
+    public LinkedList<EntityB> eb;
+
+    public Game() {
+    }
+
     public void init() {
 
         requestFocus();
@@ -49,8 +59,11 @@ public class Game extends Canvas implements Runnable {
 
         tex = new Textures(this);
         p = new Player(200, 200, tex);
-        c = new Controller(tex);
+        c = new Controller(tex,this);
         c.createEnemey(enemy_count);
+
+        ea = c.getEntityA();
+        eb = c.getEntityB();
     }
 
     private synchronized void start() {
@@ -130,6 +143,12 @@ public class Game extends Canvas implements Runnable {
     private void tick() {
         p.tick();
         c.tick();
+
+        if(enemy_killed >= enemy_count){
+            enemy_count += 2;
+            enemy_killed = 0;
+            c.createEnemey(enemy_count);
+        }
     }
 
     private void render() {
@@ -178,7 +197,7 @@ public class Game extends Canvas implements Runnable {
             p.setVelY(-5);
 
         } else if (key == KeyEvent.VK_SPACE && !isShooting) {
-            c.addEntity(new Bullets(p.getX(), p.getY(), tex));
+            c.addEntity(new Bullets(p.getX(), p.getY(), tex, this));
             isShooting = true;
         } else if (key == KeyEvent.VK_ESCAPE) {
             System.exit(0);

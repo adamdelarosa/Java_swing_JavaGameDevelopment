@@ -12,9 +12,13 @@ public class Player extends GameObject implements EntityA {
 
     private Textures tex;
 
+    Animation anim;
+
     public Player(double x, double y, Textures tex) {
         super(x, y);
         this.tex = tex;
+
+        anim = new Animation(5,tex.player[0],tex.player[1],tex.player[2]);
     }
 
 
@@ -30,11 +34,12 @@ public class Player extends GameObject implements EntityA {
             y = 0;
         if (y >= 480 - 190)
             y = 480 - 190;
+
+        anim.runAnimation();
     }
 
     public void render(Graphics g) {
-        g.drawImage(tex.player, (int) x, (int) y, null);
-
+        anim.drawAnimation(g,x,y,0);
     }
 
     public Rectangle getBounds() {

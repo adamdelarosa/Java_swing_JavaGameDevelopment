@@ -9,6 +9,7 @@ public class Controller {
 
     private LinkedList<EntityA> ea = new LinkedList<EntityA>();
     private LinkedList<EntityB> eb = new LinkedList<EntityB>();
+    private Game game;
 
 
     EntityA enta;
@@ -16,13 +17,14 @@ public class Controller {
     Textures tex;
     Random r = new Random();
 
-    public Controller(Textures tex) {
+    public Controller(Textures tex, Game game) {
         this.tex = tex;
+        this.game = game;
     }
 
     public void createEnemey(int enemy_count) {
         for (int i = 0; i < enemy_count; i++) {
-            addEntity(new Enemy(r.nextInt(640), -10, tex));
+            addEntity(new Enemy(r.nextInt(640), -10, tex, this, game));
         }
     }
 
@@ -71,6 +73,14 @@ public class Controller {
 
     public void removeEntity(EntityB block) {
         eb.remove(block);
+    }
+
+    public LinkedList<EntityA> getEntityA() {
+        return ea;
+    }
+
+    public LinkedList<EntityB> getEntityB() {
+        return eb;
     }
 
 }
