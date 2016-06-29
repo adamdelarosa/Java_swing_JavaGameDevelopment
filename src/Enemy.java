@@ -1,3 +1,4 @@
+import Classes.EntityA;
 import Classes.EntityB;
 
 import java.awt.*;
@@ -33,10 +34,18 @@ public class Enemy extends GameObject implements EntityB {
             y = -10;
         }
 
-        if (Physics.Collision(this,game.ea)){
-            c.removeEntity(this);
-            game.setEnemy_killed(game.getEnemy_killed() + 1);
+        for(int i = 0; i < game.ea.size(); i++){
+            EntityA tempEnt = game.ea.get(i);
+
+
+            if (Physics.Collision(this,tempEnt)){
+                c.removeEntity(tempEnt);
+                c.removeEntity(this);
+                game.setEnemy_killed(game.getEnemy_killed() + 1);
+            }
+
         }
+
 
         anim.runAnimation();
     }

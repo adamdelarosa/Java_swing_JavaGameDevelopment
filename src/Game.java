@@ -40,10 +40,14 @@ public class Game extends Canvas implements Runnable {
     public LinkedList<EntityA> ea;
     public LinkedList<EntityB> eb;
 
-    public static enum STATE{
+    public static int HEALTH = 100 * 2;
+
+    public static enum STATE {
         MENU,
         GAME
-    };
+    }
+
+    ;
 
     public static STATE state = STATE.MENU;
 
@@ -63,10 +67,9 @@ public class Game extends Canvas implements Runnable {
         }
 
 
-
         tex = new Textures(this);
-        p = new Player(200, 200, tex);
-        c = new Controller(tex,this);
+        c = new Controller(tex, this);
+        p = new Player(200, 200, tex, this, c);
         menu = new Menu();
 
         ea = c.getEntityA();
@@ -156,14 +159,13 @@ public class Game extends Canvas implements Runnable {
 
     private void tick() {
 
-        if(state == STATE.GAME){
+        if (state == STATE.GAME) {
             p.tick();
             c.tick();
         }
 
 
-
-        if(enemy_killed >= enemy_count){
+        if (enemy_killed >= enemy_count) {
             enemy_count += 2;
             enemy_killed = 0;
             c.createEnemey(enemy_count);
@@ -186,10 +188,21 @@ public class Game extends Canvas implements Runnable {
         g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
         g.drawImage(background, 0, 0, null);
 
-        if(state == STATE.GAME) {
+        if (state == STATE.GAME) {
             p.render(g);
             c.render(g);
-        }else if(state == STATE.MENU){
+
+            //Health Bar
+            g.setColor(Color.red);
+            g.fillRect(5, 5, 200, 10);
+
+            g.setColor(Color.green);
+            g.fillRect(5, 5, HEALTH, 10);
+
+            g.setColor(Color.white);
+            g.drawRect(5, 5, 200, 10);
+
+        } else if (state == STATE.MENU) {
             menu.render(g);
         }
 
@@ -202,7 +215,7 @@ public class Game extends Canvas implements Runnable {
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
 
-        if(state == STATE.GAME) {
+        if (state == STATE.GAME) {
 
             if (key == KeyEvent.VK_RIGHT) {
                 RIGHT = true;

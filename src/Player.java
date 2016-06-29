@@ -1,22 +1,24 @@
 import Classes.EntityA;
+import Classes.EntityB;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Player extends GameObject implements EntityA {
 
-    private double velX;
-    private double velY;
-
-    private BufferedImage player;
-
+    private double velX = 0;
+    private double velY = 0;
     private Textures tex;
 
+    Game game;
+    Controller controller;
     Animation anim;
 
-    public Player(double x, double y, Textures tex) {
+    public Player(double x, double y, Textures tex, Game game, Controller controller) {
         super(x, y);
         this.tex = tex;
+        this.game = game;
+        this.controller = controller;
 
         anim = new Animation(5,tex.player[0],tex.player[1],tex.player[2]);
     }
@@ -34,6 +36,17 @@ public class Player extends GameObject implements EntityA {
             y = 0;
         if (y >= 480 - 190)
             y = 480 - 190;
+
+        for(int i = 0; i < game.eb.size(); i++){
+            EntityB tempEnt = game.eb.get(i);
+
+            if(Physics.Collision(this,tempEnt)){
+                controller.removeEntity(tempEnt);
+                Game.HEALTH -= 10;
+                game.setEnemy_killed(game.getEnemy_killed() + 1);
+
+            }
+        }
 
         anim.runAnimation();
     }
