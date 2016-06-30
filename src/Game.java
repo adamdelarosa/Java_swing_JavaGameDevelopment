@@ -14,14 +14,15 @@ public class Game extends Canvas implements Runnable {
     private static final long serialVersionUID = 1L;
     public static final int WIDTH = 320;
     public static final int HEIGHT = WIDTH / 20 * 10;
-    public static final int SCALE = 2;
+    public static final int SCALE = 4;
     public final String TITLE = "2D Game";
     public boolean running = false;
     private Thread thread;
 
-    private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_3BYTE_BGR);
+    private BufferedImage image = new BufferedImage(WIDTH , HEIGHT , BufferedImage.TYPE_3BYTE_BGR);
     private BufferedImage spriteSheet = null;
     private BufferedImage background = null;
+
 
     private boolean UP = false;
     private boolean DOWN = false;
@@ -61,6 +62,7 @@ public class Game extends Canvas implements Runnable {
         BufferedImageLoader loader = new BufferedImageLoader();
         try {
             spriteSheet = loader.loadImage("rsc/ship.png");
+
             background = loader.loadImage("rsc/background.jpg");
         } catch (IOException ioexception) {
             ioexception.printStackTrace();
@@ -172,6 +174,8 @@ public class Game extends Canvas implements Runnable {
         }
     }
 
+
+
     private void render() {
         BufferStrategy bs = this.getBufferStrategy();
 
@@ -186,7 +190,10 @@ public class Game extends Canvas implements Runnable {
         ////
 
         g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
-        g.drawImage(background, 0, 0, null);
+        g.drawImage(background, 0,0,100,100,this);
+
+
+
 
         if (state == STATE.GAME) {
             p.render(g);
@@ -211,6 +218,8 @@ public class Game extends Canvas implements Runnable {
         bs.show();
 
     }
+
+
 
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
@@ -277,7 +286,7 @@ public class Game extends Canvas implements Runnable {
         frame.add(game);
         frame.pack();
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setResizable(false);
+        frame.setResizable(true);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 

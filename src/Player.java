@@ -10,6 +10,8 @@ public class Player extends GameObject implements EntityA {
     private double velY = 0;
     private Textures tex;
 
+    BufferedImage image;
+
     Game game;
     Controller controller;
     Animation anim;
@@ -20,7 +22,7 @@ public class Player extends GameObject implements EntityA {
         this.game = game;
         this.controller = controller;
 
-        anim = new Animation(5,tex.player[0],tex.player[1],tex.player[2]);
+        anim = new Animation(5, tex.player[0], tex.player[1], tex.player[2]);
     }
 
 
@@ -37,10 +39,10 @@ public class Player extends GameObject implements EntityA {
         if (y >= 480 - 190)
             y = 480 - 190;
 
-        for(int i = 0; i < game.eb.size(); i++){
+        for (int i = 0; i < game.eb.size(); i++) {
             EntityB tempEnt = game.eb.get(i);
 
-            if(Physics.Collision(this,tempEnt)){
+            if (Physics.Collision(this, tempEnt)) {
                 controller.removeEntity(tempEnt);
                 Game.HEALTH -= 10;
                 game.setEnemy_killed(game.getEnemy_killed() + 1);
@@ -52,12 +54,13 @@ public class Player extends GameObject implements EntityA {
     }
 
     public void render(Graphics g) {
-        anim.drawAnimation(g,x,y,0);
+        anim.drawAnimation(g, x, y, 0);
     }
 
     public Rectangle getBounds() {
         return new Rectangle((int) x, (int) y, 32, 32);
     }
+
 
     public double getX() {
         return x;

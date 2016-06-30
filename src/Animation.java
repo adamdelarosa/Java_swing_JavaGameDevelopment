@@ -522,7 +522,7 @@ public class Animation {
     }
 
     public void drawAnimation(Graphics g, double x, double y, int offset){
-        g.drawImage(currentImg, (int)x - offset, (int)y, null);
+        g.drawImage(currentImg, (int)x - offset, (int)y,100,100, null);
     }
 
     public void setCount(int count){
@@ -537,5 +537,4 @@ public class Animation {
     public void setSpeed(int speed){
         this.speed = speed;
     }
-
 }
