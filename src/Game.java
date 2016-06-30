@@ -124,10 +124,10 @@ public class Game extends Canvas implements Runnable {
 
             //Keyboard:
 
-            if (UP) p.setVelY(-5);
-            if (DOWN) p.setVelY(5);
-            if (LEFT) p.setVelX(-5);
-            if (RIGHT) p.setVelX(5);
+            if (UP) p.setVelY(-10);
+            if (DOWN) p.setVelY(10);
+            if (LEFT) p.setVelX(-10);
+            if (RIGHT) p.setVelX(10);
 
             try {
                 Thread.sleep(10);

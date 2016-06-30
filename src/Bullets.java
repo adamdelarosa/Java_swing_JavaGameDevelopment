@@ -18,7 +18,7 @@ public class Bullets extends GameObject implements EntityA {
     }
 
     public void tick() {
-        y -= 10;
+        y -= 5;
 
         anim.runAnimation();
     }
