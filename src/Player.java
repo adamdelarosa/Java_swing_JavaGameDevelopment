@@ -30,14 +30,17 @@ public class Player extends GameObject implements EntityA {
         x += velX;
         y += velY;
 
+
+        //System.out.println(Game.SCALE +"and"+ Game.WIDTH  +"and"+ Game.HEIGHT);
+
         if (x <= 0)
             x = 0;
-        if (x >= 640 - 32)
-            x = 640 - 32;
+        if (x >= (Game.WIDTH * 4) - 100)
+            x = (Game.WIDTH * 4) - 100;
         if (y <= 0)
             y = 0;
-        if (y >= 480 - 190)
-            y = 480 - 190;
+        if (y >= (Game.HEIGHT* 4) - 100)
+            y = (Game.HEIGHT * 4) - 100;
 
         for (int i = 0; i < game.eb.size(); i++) {
             EntityB tempEnt = game.eb.get(i);

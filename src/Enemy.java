@@ -30,7 +30,7 @@ public class Enemy extends GameObject implements EntityB {
 
         if (y > (Game.HEIGHT * Game.SCALE)) {
             speed = r.nextInt(3)+1;
-            x = r.nextInt(640);
+            x = r.nextInt(Game.HEIGHT);
             y = -10;
         }
 

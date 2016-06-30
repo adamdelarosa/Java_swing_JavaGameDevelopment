@@ -24,7 +24,7 @@ public class Controller {
 
     public void createEnemey(int enemy_count) {
         for (int i = 0; i < enemy_count; i++) {
-            addEntity(new Enemy(r.nextInt(640), -10, tex, this, game));
+            addEntity(new Enemy(r.nextInt(Game.WIDTH * 4), -10, tex, this, game));
         }
     }
 
