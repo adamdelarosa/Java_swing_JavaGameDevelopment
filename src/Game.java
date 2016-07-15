@@ -19,7 +19,7 @@ public class Game extends Canvas implements Runnable {
     public boolean running = false;
     private Thread thread;
 
-    private BufferedImage image = new BufferedImage(WIDTH , HEIGHT , BufferedImage.TYPE_3BYTE_BGR);
+    private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_3BYTE_BGR);
     private BufferedImage spriteSheet = null;
     private BufferedImage background = null;
 
@@ -32,6 +32,10 @@ public class Game extends Canvas implements Runnable {
 
     private int enemy_count = 5;
     private int enemy_killed = 0;
+
+    private int bgY1 = 0;
+    private int bgY2 = -(HEIGHT * SCALE);
+    private int bgSpeed = 10;
 
     private Player p;
     private Controller c;
@@ -172,8 +176,16 @@ public class Game extends Canvas implements Runnable {
             enemy_killed = 0;
             c.createEnemey(enemy_count);
         }
-    }
 
+        // Calculate scroll for background
+        bgY1 += bgSpeed;
+        bgY2 += bgSpeed;
+
+        if (bgY2 >= 0) {
+            bgY1 = 0;
+            bgY2 = -(HEIGHT * SCALE);
+        }
+    }
 
 
     private void render() {
@@ -190,9 +202,11 @@ public class Game extends Canvas implements Runnable {
         ////
 
         g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
-        g.drawImage(background, 0,0,100,100,this);
+        g.drawImage(background, 0, 0, 100, 100, this);
 
-
+        // Draw Background scrolling
+        g.drawImage(background, 0, bgY1, null); // Draw the first background
+        g.drawImage(background, 0, bgY2, null); // Draw the second background
 
 
         if (state == STATE.GAME) {
@@ -218,7 +232,6 @@ public class Game extends Canvas implements Runnable {
         bs.show();
 
     }
-
 
 
     public void keyPressed(KeyEvent e) {
@@ -273,8 +286,8 @@ public class Game extends Canvas implements Runnable {
         } else if (key == KeyEvent.VK_SPACE) {
             isShooting = false;
         }
-    }
 
+    }
 
     public static void main(String args[]) {
         Game game = new Game();
@@ -292,7 +305,6 @@ public class Game extends Canvas implements Runnable {
 
         game.start();
     }
-
 
     public BufferedImage getSpriteSheet() {
         return spriteSheet;
@@ -313,6 +325,4 @@ public class Game extends Canvas implements Runnable {
     public void setEnemy_killed(int enemy_killed) {
         this.enemy_killed = enemy_killed;
     }
-
-
 }
